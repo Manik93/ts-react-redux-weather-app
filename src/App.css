@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.weatherCard {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  border: 2px black;
+  border-radius: 5px;
+  background-color: antiquewhite;
+}

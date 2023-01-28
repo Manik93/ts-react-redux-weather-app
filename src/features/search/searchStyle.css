@@ -1,0 +1,12 @@
+.searchContainer {
+  margin: 2% auto;
+  width: 60%;
+  background-color: cadetblue;
+  border: solid 3px cornflowerblue;
+  border-radius: 30px;
+}
+
+.searchInput {
+  width: 90%;
+  margin: 5% auto;
+}

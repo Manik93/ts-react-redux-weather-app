@@ -1,0 +1,12 @@
+.weatherCard {
+  text-align: center;
+  margin: 0 auto;
+  width: auto;
+  border: 2px black;
+  border-radius: 5px;
+  background-color: antiquewhite;
+}
+
+.h2 {
+  margin: 0;
+}

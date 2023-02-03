@@ -1,12 +1,16 @@
 .searchContainer {
-  margin: 2% auto;
-  width: 60%;
-  background-color: cadetblue;
-  border: solid 3px cornflowerblue;
-  border-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding: 7px 0;
+  width: 100%;
+  height: 2%;
+  background-color: #f1fbfc;
+  border-bottom: solid 2px rgb(205, 214, 210);
+  flex-direction: row;
+  align-items: center;
 }
 
 .searchInput {
-  width: 90%;
-  margin: 5% auto;
+  width: 40%;
 }

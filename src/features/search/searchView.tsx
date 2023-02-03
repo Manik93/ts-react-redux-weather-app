@@ -1,20 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { fetchOptions, loadOptions, OptionType } from './searchSlice';
-import './searchStyle.css';
+import { fetchOptions } from './searchSlice';
 import { AsyncPaginate } from 'react-select-async-paginate';
+import { fetchWeatherData } from '../weather/weatherSlice';
+import './searchStyle.css';
 
 export const SearchView = ({ onSearchChange }: any) => {
-  //const geoOptions: OptionType[] = useAppSelector((state) => state.geo.options);
-
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchOptions(search));
-  }, []);
-
   const [search, setSearch] = useState<string>('');
 
+  //
+  const geo: any = useAppSelector((state) => state.geo);
+  console.log('SearchView Render: ', geo);
+  //
+
+  const loadOptions = (search: string) => {
+    const options = dispatch(fetchOptions(search)).unwrap();
+    console.log('loadOptions');
+    return options;
+  };
+
   const handleOnChange = (searchData: any) => {
+    dispatch(fetchWeatherData(searchData.value));
     setSearch(searchData);
     onSearchChange(searchData);
   };

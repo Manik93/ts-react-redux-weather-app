@@ -1,29 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { WeatherData } from '../../app/types';
 import { WEATHER_API_URL, WEATHER_API_KEY } from '../../app/api';
 import axios from 'axios';
-import { useState } from 'react';
-
-type WeatherData = {
-  current: {
-    temp: number;
-    feels_like: number;
-    pressure: number;
-    humidity: number;
-    weather: {
-      main: string;
-      description: string;
-    };
-  };
-  city: {
-    id: number;
-    name: string;
-    country: string;
-    coord: {
-      lat: number;
-      lon: number;
-    };
-  };
-};
 
 type InitialState = {
   loading: boolean;
@@ -31,46 +9,57 @@ type InitialState = {
   error: string;
 };
 
+/* coord: { lon: '', lat: '' },
+weather: [{ id: 0, main: '', description: '', icon: '' }],
+main: {
+  temp: 0,
+  feels_like: 0,
+  temp_min: 0,
+  temp_max: 0,
+  pressure: 0,
+  humidity: 0,
+  sea_level: 0,
+  grnd_level: 0,
+},
+visibility: 0,
+wind: { speed: 0, deg: 0, gust: 0 },
+clouds: { all: 0 },
+id: 0,
+name: '', */
+
 const initialState: InitialState = {
   loading: false,
-  weatherData: {
-    current: {
-      temp: 0,
-      feels_like: 0,
-      pressure: 0,
-      humidity: 0,
-      weather: {
-        main: '',
-        description: '',
-      },
-    },
-    city: {
-      id: 0,
-      name: '',
-      country: '',
-      coord: {
-        lat: 0,
-        lon: 0,
-      },
-    },
-  },
+  weatherData: {},
   error: '',
 };
-//'/weather?lat={lat}&lon={lon}&appid={API key}';
-interface CurrentWeather {
-  lat: number;
-  lon: number;
-  apiKey: string;
-}
 
 export const fetchWeatherData = createAsyncThunk(
   'weather/fetchWeatherData',
-  () => {
-    return axios
+  async (coords: string) => {
+    const [lat, lon] = coords.split(' ');
+
+    const response = await axios
       .get(
-        'https://api.openweathermap.org/data/2.5/forecast?id=4350049&appid=b3e06100de79a013d6da6f01e23f04b5'
+        `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`
       )
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .then((response) => {
+        return {
+          coord: response.coord,
+          weather: response.weather,
+          main: response.main,
+          visibility: response.visibility,
+          wind: response.wind,
+          clouds: response.clouds,
+          rain: response.rain,
+          snow: response.snow,
+          id: response.id,
+          name: response.name,
+        };
+      })
+      .catch((error) => console.error(error));
+
+    return response;
   }
 );
 
@@ -81,18 +70,21 @@ const weatherSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchWeatherData.pending, (state) => {
       state.loading = true;
+      state.weatherData = {};
     });
     builder.addCase(
       fetchWeatherData.fulfilled,
-      (state, action: PayloadAction<WeatherData>) => {
+      (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.weatherData = action.payload;
         state.error = '';
+        console.log('fetchWeatherData fulfilled : ', action.payload);
       }
     );
     builder.addCase(fetchWeatherData.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || 'Something went wrong';
+      state.weatherData = {};
+      state.error = action.error.message || "Can't fetch weather data";
     });
   },
 });

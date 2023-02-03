@@ -1,17 +1,21 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { GEO_API_URL, geoApiOptions } from '../../app/api';
-import { OptionType } from '../../app/types';
+import { WEATHER_API_URL, WEATHER_API_KEY } from '../../app/api';
 import axios from 'axios';
+
+type OptionType = {
+  value: string;
+  label: string;
+};
 
 type InitialState = {
   loading: boolean;
-  options: OptionType[];
+  forecast: {};
   error: string;
 };
 
 const initialState: InitialState = {
   loading: false,
-  options: [],
+  forecast: {},
   error: '',
 };
 
@@ -48,55 +52,46 @@ const sleep = (ms: number) =>
     }, ms);
   });
 
-export const fetchOptions: any = createAsyncThunk(
-  'search/fetchGeoData',
-  async (InputValue: string) => {
+export const fetchForecast: any = createAsyncThunk(
+  'forecast/fetchForecast',
+  async (Lat: any, Lon: any) => {
+    const lat = Lat,
+      lon = Lon;
     const response = await axios
       .get(
-        `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${InputValue}`,
-        geoApiOptions
+        `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`
       )
-      .then((response) => response.data.data as OptionType[])
-      .then((response) => {
-        return {
-          options: response?.map((city: any) => {
-            return <OptionType>{
-              value: `${city?.latitude} ${city?.longitude}`,
-              label: `${city?.name}, ${city?.countryCode}`,
-            };
-          }),
-        };
-      })
+      .then((response) => response.data)
       .catch((error) => console.error(error));
-
+    console.log('forecast/fetchForecast ', response);
     return response;
   }
 );
 
-const searchSlice = createSlice({
-  name: 'search',
+const forecastSlice = createSlice({
+  name: 'forecast',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchOptions.pending, (state) => {
+    builder.addCase(fetchForecast.pending, (state) => {
       state.loading = true;
-      state.options = [];
     });
     builder.addCase(
-      fetchOptions.fulfilled,
+      fetchForecast.fulfilled,
       (state, action: PayloadAction<OptionType[]>) => {
         state.loading = false;
-        state.options = action.payload;
+        state.forecast = action.payload;
         state.error = '';
-        console.log('fetchOptions fulfilled: ', action.payload);
+        console.log('Forecast payload: ', action.payload);
+        console.log('Forecast prev state: ', state.forecast);
       }
     );
-    builder.addCase(fetchOptions.rejected, (state, action) => {
+    builder.addCase(fetchForecast.rejected, (state, action) => {
       state.loading = false;
-      state.options = [];
-      state.error = action.error.message || "Can't fetch select options";
+      state.forecast = [];
+      state.error = action.error.message || `Can't fetch forecast data`;
     });
   },
 });
 
-export default searchSlice.reducer;
+export default forecastSlice.reducer;

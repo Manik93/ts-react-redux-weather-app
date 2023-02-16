@@ -1,12 +1,181 @@
-.weatherCard {
-  text-align: center;
-  margin: 0 auto;
-  width: auto;
-  border: 2px black;
-  border-radius: 5px;
-  background-color: antiquewhite;
+.weatherView {
 }
 
-.h2 {
-  margin: 0;
+.dayOfTheWeek {
+  font-size: 20pt;
+  margin: 0 auto;
+}
+.currentTime {
+  margin: 2% 0 10% 0;
+}
+.currentTemp {
+  font-size: 20pt;
+  margin: 10% 0 0 0;
+}
+
+#wrapper {
+  position: relative;
+}
+
+.content {
+  position: relative;
+  z-index: 100;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+
+.weatherCard {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  gap: 20%;
+  margin-top: 5%;
+  background-color: rgba(63, 166, 201, 0.95);
+  border-top: 5px solid rgba(11, 6, 0, 0.9);
+  border-left: 5px solid rgba(11, 6, 0, 0.9);
+  border-right: 5px solid rgba(11, 6, 0, 0.9);
+  border-bottom: 2px solid rgba(11, 6, 0, 0.8);
+  border-radius: 10px 10px 0 0;
+}
+
+.cityPanel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 40%;
+}
+
+.cityName {
+  font-size: 18pt;
+  margin: 0 0 0 5%;
+}
+
+.currentDate {
+  font-size: 18pt;
+  margin: 10% 0;
+}
+
+.displayBlock {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cardContent {
+  padding: 5% 0 5% 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 5%;
+  background-color: rgba(189, 238, 219, 0.95);
+  border-left: 5px solid rgba(11, 6, 0, 0.9);
+  border-right: 5px solid rgba(11, 6, 0, 0.9);
+  border-bottom: 5px solid rgba(11, 6, 0, 0.9);
+  border-radius: 0 0 10px 10px;
+}
+
+.minMaxTemp {
+  display: flex;
+  gap: 10%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.weatherIcon {
+  width: 128px;
+  height: 128px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.parameter-row {
+  display: inherit;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.parameter-label {
+  font-size: larger;
+  margin: 0 0 10% 0;
+}
+
+.parameter-value {
+  margin: 0 0 10% 0;
+  font-size: larger;
+  font-weight: 600;
+}
+.geoIcon {
+  width: 16px;
+  height: 24px;
+}
+
+.weatherBackground {
+  z-index: -1;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: -webkit-fill-available;
+
+  justify-content: space-around;
+}
+
+.wb-1 {
+  background: linear-gradient(
+    159deg,
+    rgba(200, 140, 99, 1) 0%,
+    rgba(145, 102, 108, 1) 40%,
+    rgba(121, 98, 119, 1) 100%
+  );
+  width: 40%;
+}
+
+.wb-2 {
+  background: linear-gradient(
+    160deg,
+    rgba(248, 138, 93, 1) 0%,
+    rgba(219, 120, 98, 1) 40%,
+    rgba(214, 115, 98, 1) 100%
+  );
+  width: 15%;
+}
+
+.wb-3 {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 226, 76, 1) 0%,
+    rgba(254, 182, 66, 1) 40%,
+    rgba(253, 166, 51, 1) 100%
+  );
+  width: 15%;
+}
+
+.wb-4 {
+  background: linear-gradient(
+    185deg,
+    rgba(236, 199, 151, 1) 0%,
+    rgba(226, 181, 121, 1) 40%,
+    rgba(171, 135, 88, 1) 100%
+  );
+  width: 30%;
 }

@@ -1,6 +1,5 @@
 ## ToDo
 
-- Fix output fields
-- Layout
+- Min/Max temp calculation
 - Local storage
-- Tests
+- Internationalization

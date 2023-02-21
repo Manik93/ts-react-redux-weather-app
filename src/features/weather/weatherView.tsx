@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
-import { WeatherData } from '../../app/types';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { formattedDate, dayOfTheWeek } from '../../app/utils';
 import './weatherStyle.css';
 import geoIcon from '../../assets/geolocation_ico.png';
 
-/*  local storage
-  const lsObject: WeatherData = localStorage.getItem('currentWeather') as WeatherData;
-  console.log('Object from ls: ', JSON.parse(lsObject as string)); 
-  */
-
 export const WeatherView = () => {
+  const [dateTime, setDateTime] = useState(new Date());
+  useEffect(() => {
+    setInterval(() => setDateTime(new Date()), 60000);
+  }, []);
   const weatherReq = useAppSelector((state) => state.weather);
   const weatherData = weatherReq.weatherData;
 
@@ -19,7 +17,15 @@ export const WeatherView = () => {
   return (
     <div className="weatherView">
       {weatherReq.loading ? (
-        <div>Loading...</div>
+        <div id="wrapper">
+          <div className="weatherBackground">
+            <div className="wb-1"></div>
+            <div className="wb-2"></div>
+            <div className="wb-3"></div>
+            <div className="wb-4"></div>
+          </div>
+          <div className="loading">Loading...</div>
+        </div>
       ) : (
         weatherData && (
           <div id="wrapper">
@@ -42,16 +48,22 @@ export const WeatherView = () => {
                 </div>
               </div>
               <div className="cardContent">
-                <div className="left">
-                  <div className="parameter-row">
+                <div className="contentColumn">
+                  <div className="dateTime">
                     <p className="dayOfTheWeek">{dayOfTheWeek()}</p>
-                    <p className="currentTime">currentTime</p>
+                    <p className="currentTime">
+                      {dateTime.toLocaleString('en-US', {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true,
+                      })}
+                    </p>
                   </div>
-                  <div className="minMaxTemp">
-                    <p className="parameter-value">
+                  <div className="minMaxRow">
+                    <p className="minMaxValue">
                       {`↓ ${Math.round(weatherData.main.temp_min)} °C`}
                     </p>
-                    <p className="parameter-value">
+                    <p className="minMaxValue">
                       {`↑ ${Math.round(weatherData.main.temp_max)} °C`}
                     </p>
                   </div>
@@ -59,29 +71,20 @@ export const WeatherView = () => {
                     {Math.round(weatherData.main.temp)} °C
                   </p>
                 </div>
-                <div className="center">
-                  {weatherData.weather && (
-                    <>
-                      <div className="parameter-row">
-                        <img
-                          alt="weather"
-                          className="weatherIcon"
-                          src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                        />
-                      </div>
-                      <div className="parameter-row">
-                        <p className="weather-description">
-                          {weatherData.weather &&
-                            weatherData.weather[0].description
-                              .charAt(0)
-                              .toUpperCase() +
-                              weatherData.weather[0].description.slice(1)}
-                        </p>
-                      </div>
-                    </>
-                  )}
+                <div className="contentColumn">
+                  <img
+                    alt="weather"
+                    className="weatherIcon"
+                    src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                  />
+                  <p className="weatherDescription">
+                    {weatherData.weather[0].description
+                      .charAt(0)
+                      .toUpperCase() +
+                      weatherData.weather[0].description.slice(1)}
+                  </p>
                 </div>
-                <div className="right">
+                <div className="contentColumnRight">
                   <div className="parameter-row">
                     <p className="parameter-label">Humidity: </p>
                     <p className="parameter-value">
@@ -91,13 +94,13 @@ export const WeatherView = () => {
                   <div className="parameter-row">
                     <p className="parameter-label">Feels like: </p>
                     <p className="parameter-value">
-                      {`${Math.round(weatherData.main.feels_like)} m/s`}
+                      {`${Math.round(weatherData.main.feels_like)} °C`}
                     </p>
                   </div>
                   <div className="parameter-row">
                     <p className="parameter-label">Wind: </p>
                     <p className="parameter-value">
-                      {`${weatherData.wind.speed} m/s`}
+                      {`${Math.round(weatherData.wind.speed)} m/s`}
                     </p>
                   </div>
                   <div className="parameter-row">

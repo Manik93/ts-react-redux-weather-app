@@ -30,13 +30,3 @@ function App() {
 }
 
 export default App;
-
-/*
-    const handleOnClick = () => {
-    console.log(
-      JSON.parse(
-        localStorage.getItem('currentWeather') as string
-      ) as WeatherData
-    );
-  }; 
-  */

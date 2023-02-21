@@ -22,12 +22,6 @@ export const ForecastView = ({ location }: forecastProps) => {
     const filteredForecast = forecastData.list.filter(
       (item, index) => !((index + 1) % 9)
     );
-    console.log(
-      'ForecastView Render: ',
-      forecastData,
-      '\nfiltered: ',
-      filteredForecast
-    );
 
     return (
       <div className="forecastView">
@@ -46,10 +40,13 @@ export const ForecastView = ({ location }: forecastProps) => {
                       {weekDaysFromCurrent()[index]}
                     </label>
                     <label className="description">
-                      {item.weather[0].description}
+                      {item.weather[0].description.charAt(0).toUpperCase() +
+                        item.weather[0].description.slice(1)}
                     </label>
                     <label className="min-max">
-                      {item.main.temp_min}°C / {item.main.temp_max} °C
+                      {`${Math.round(item.main.temp_min)}°C / ${Math.round(
+                        item.main.temp_max
+                      )}°C`}
                     </label>
                   </div>
                 </AccordionItemButton>
@@ -58,27 +55,27 @@ export const ForecastView = ({ location }: forecastProps) => {
                 <div className="daily-details-grid">
                   <div className="daily-details-grid-item">
                     <label>Pressure:</label>
-                    <label>{item.main.pressure}</label>
+                    <label>{`${item.main.pressure} hPa`}</label>
                   </div>
                   <div className="daily-details-grid-item">
                     <label>Humidity:</label>
-                    <label>{item.main.humidity}</label>
+                    <label>{`${Math.round(item.main.humidity)} %`}</label>
                   </div>
                   <div className="daily-details-grid-item">
                     <label>Clouds:</label>
-                    <label>{item.clouds.all} %</label>
+                    <label>{`${item.clouds.all} %`}</label>
                   </div>
                   <div className="daily-details-grid-item">
                     <label>Wind speed:</label>
-                    <label>{item.wind.speed} m/s</label>
+                    <label>{`${Math.round(item.wind.speed)} m/s`}</label>
                   </div>
                   <div className="daily-details-grid-item">
                     <label>Sea level:</label>
-                    <label>{item.main.sea_level} m</label>
+                    <label>{`${item.main.sea_level} m`}</label>
                   </div>
                   <div className="daily-details-grid-item">
                     <label>Feels like:</label>
-                    <label>{item.main.feels_like} °C</label>
+                    <label>{`${Math.round(item.main.feels_like)} °C`}</label>
                   </div>
                 </div>
               </AccordionItemPanel>
@@ -88,7 +85,7 @@ export const ForecastView = ({ location }: forecastProps) => {
       </div>
     );
   } catch (error) {
-    console.log('Error');
+    console.log('Error. Reloading forecast element');
     return <></>;
   }
 };

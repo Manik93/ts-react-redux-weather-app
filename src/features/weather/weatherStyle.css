@@ -1,32 +1,19 @@
 .weatherView {
+  margin: 0;
+  width: auto;
+  border-bottom: solid 2px lightgray;
 }
 
-.dayOfTheWeek {
-  font-size: 20pt;
-  margin: 0 auto;
-}
-.currentTime {
-  margin: 2% 0 10% 0;
-}
-.currentTemp {
-  font-size: 20pt;
-  margin: 10% 0 0 0;
+.loading {
+  height: 400px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #wrapper {
   position: relative;
-}
-
-.content {
-  position: relative;
-  z-index: 100;
-}
-
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
 }
 
 .weatherCard {
@@ -34,9 +21,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  text-align: center;
   margin: 0 auto;
-  width: 60%;
+  width: 70%;
 }
 
 .cardHeader {
@@ -44,7 +30,6 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: row;
-  gap: 20%;
   margin-top: 5%;
   background-color: rgba(63, 166, 201, 0.95);
   border-top: 5px solid rgba(11, 6, 0, 0.9);
@@ -58,26 +43,37 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 40%;
+  justify-content: flex-start;
+  width: 45%;
+  margin-left: 5%;
+}
+
+.geoIcon {
+  width: 6%;
+  height: 10%;
 }
 
 .cityName {
   font-size: 18pt;
-  margin: 0 0 0 5%;
+  margin: 5% 0 5% 5%;
+}
+
+.datePanel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 45%;
+  margin-right: 5%;
 }
 
 .currentDate {
   font-size: 18pt;
-  margin: 10% 0;
-}
-
-.displayBlock {
-  display: flex;
-  justify-content: space-around;
+  margin: 5% 0 5% 0;
 }
 
 .cardContent {
-  padding: 5% 0 5% 0;
+  padding: 3% 0 3% 0;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
@@ -90,11 +86,47 @@
   border-radius: 0 0 10px 10px;
 }
 
-.minMaxTemp {
-  display: flex;
+.contentColumn {
+  display: inherit;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+}
+
+.dateTime {
+  display: inherit;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dayOfTheWeek {
+  font-size: 20pt;
+  margin: 0 auto;
+}
+
+.currentTime {
+  margin: 7% 0 0 0;
+}
+
+.minMaxRow {
+  display: inherit;
   gap: 10%;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
+  margin-top: 7%;
+}
+
+.minMaxValue {
+  margin: 0;
+  font-size: large;
+  font-weight: 500;
+}
+
+.currentTemp {
+  font-size: xx-large;
+  margin: 10% 0 0 0;
+  font-weight: bold;
 }
 
 .weatherIcon {
@@ -102,10 +134,15 @@
   height: 128px;
 }
 
-.right {
+.weatherDescription {
+  font-weight: bold;
+}
+
+.contentColumnRight {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 33%;
 }
 
 .parameter-row {
@@ -124,10 +161,6 @@
   margin: 0 0 10% 0;
   font-size: larger;
   font-weight: 600;
-}
-.geoIcon {
-  width: 16px;
-  height: 24px;
 }
 
 .weatherBackground {

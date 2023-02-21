@@ -1,4 +1,5 @@
 .searchView {
+  text-align: center;
   z-index: 1;
   display: flex;
   flex-direction: row;

@@ -33,6 +33,7 @@ export type WeatherData = {
 //forecast
 interface ForecastItem {
   main: mainObject;
+  dt_txt: string;
   clouds: { all: number };
   weather: [{ id: number; main: string; description: string; icon: string }];
   wind: { speed: number; deg: number; gust: number };
